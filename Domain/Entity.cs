@@ -3,7 +3,6 @@ namespace IWanteApp.Domain;
 public abstract class Entity
 {
 
-//gera um novo Id sempre que guid for instanciado
 public Entity()
 {
     Id = Guid.NewGuid();
