@@ -1,3 +1,4 @@
+using Flunt.Notifications;
 using IWanteApp.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,8 @@ public class ApplicationDbContext : DbContext
     //fluentAPI
     protected override void OnModelCreating (ModelBuilder builder) 
     {
+        builder.Ignore<Notification>();
+
        builder.Entity<Product>()
             .Property(p => p.Name).IsRequired();
        builder.Entity<Product>()

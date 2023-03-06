@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "eYIn9I9aMFe4TtGJ8vU+R42z9r05fueeCDRDGuVIQy+IZ0M/BMVqLbcPuezlqk1tP/8f0WvzGbRzZSa3TG8yRQ==",
+  "dgSpecHash": "FahT3RS47oVuPSisY9uxAF/cPzfGCnOY1nJW2JWnf9qziVGfqGwnxcVLBB+d/hTJxBVeKJAc8W7k7++F+9avyw==",
   "success": true,
   "projectFilePath": "C:\\Users\\96271\\Desktop\\IWanteApp\\IWanteApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\96271\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\96271\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\96271\\.nuget\\packages\\flunt\\2.0.5\\flunt.2.0.5.nupkg.sha512",
     "C:\\Users\\96271\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\96271\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\96271\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

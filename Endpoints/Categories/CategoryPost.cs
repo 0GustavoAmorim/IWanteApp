@@ -11,18 +11,24 @@ public class CategoryPost
 
     public static IResult Action(CategoryRequest categoryRequest, ApplicationDbContext context)
     {
-        var category = new Category
+        //validação por if, propriedade unica
+        // if(string.IsNullOrEmpty(categoryRequest.Name))
+        //     return Results.BadRequest("Name is Required");
+
+
+        var category = new Category(categoryRequest.Name, "Test", "Test");
+
+        if (!category.IsValid)
         {
-            Name = categoryRequest.Name,
-            CreatedBy = "Teste",
-            CreatedOn = DateTime.Now,
-            EditedBy = "Teste",
-            EditedOn = DateTime.Now
-        };
+            var errors = category.Notifications
+            .GroupBy(g => g.Key)
+            .ToDictionary(g => g.Key, g=> g.Select(x => x.Message).ToArray());
+            return Results.ValidationProblem(errors);
+        }
+
         context.Categories.Add(category);
         context.SaveChanges();
 
-        return Results.Created($"O/categories/{category.Id}", category.Id);
+        return Results.Created($"/categories/{category.Id}", category.Id);
     }
-
 }
