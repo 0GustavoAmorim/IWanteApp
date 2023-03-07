@@ -11,10 +11,6 @@ public class CategoryPost
 
     public static IResult Action(CategoryRequest categoryRequest, ApplicationDbContext context)
     {
-        //validação por if, propriedade unica
-        // if(string.IsNullOrEmpty(categoryRequest.Name))
-        //     return Results.BadRequest("Name is Required");
-
 
         var category = new Category(categoryRequest.Name, "Test", "Test");
 
