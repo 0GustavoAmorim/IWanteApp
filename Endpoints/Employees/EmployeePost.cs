@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 
 namespace IWanteApp.Endpoints.Employees;
@@ -14,7 +15,20 @@ public class EmployeePost
         var result = userManager.CreateAsync(user, employeeRequest.Password).Result;
 
         if (!result.Succeeded)
+            return Results.ValidationProblem(result.Errors.ConvertToProblemDetails());
+
+        //lista de Claims
+        var userClaims = new List<Claim>
+        {
+            new Claim("EmployeeCode", employeeRequest.EmployeeCode),
+            new Claim("Name", employeeRequest.Name)
+        };
+
+        var claimResult = userManager.AddClaimsAsync(user, userClaims).Result;
+
+        if(!claimResult.Succeeded)
             return Results.BadRequest(result.Errors.First());
+
 
         return Results.Created($"/employees/{user.Id}", user.Id);
     }
