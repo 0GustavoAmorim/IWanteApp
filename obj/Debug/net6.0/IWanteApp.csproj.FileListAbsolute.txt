@@ -82,3 +82,4 @@ C:\Users\96271\Desktop\IWanteApp\bin\Debug\net6.0\runtimes\browser\lib\net6.0\Sy
 C:\Users\96271\Desktop\IWanteApp\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 C:\Users\96271\Desktop\IWanteApp\bin\Debug\net6.0\Flunt.dll
 C:\Users\96271\Desktop\IWanteApp\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\96271\Desktop\IWanteApp\bin\Debug\net6.0\Dapper.dll
