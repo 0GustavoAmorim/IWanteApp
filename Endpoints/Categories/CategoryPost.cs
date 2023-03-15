@@ -1,5 +1,6 @@
 using IWanteApp.Domain.Products;
 using IWanteApp.Infra.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IWanteApp.Endpoints.Categories;
 
@@ -9,6 +10,7 @@ public class CategoryPost
     public static string[] Methods => new string[] { HttpMethod.Post.ToString() };
     public static Delegate Handle => Action;
 
+    [Authorize]
     public static IResult Action(CategoryRequest categoryRequest, ApplicationDbContext context)
     {
 
