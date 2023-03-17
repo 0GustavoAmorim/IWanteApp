@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+   <!-- External -->
+    <Using Include="Flunt.Notifications"/>
+    <Using Include="Microsoft.AspNetCore.Identity"/>
+    <Using Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore"/>
+    <Using Include="Microsoft.EntityFrameworkCore"/>
+
+    <!-- Internal -->
+    <Using Include="IWanteApp.Domain.Products"/>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Flunt" Version="2.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0" />
