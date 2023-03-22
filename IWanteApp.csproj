@@ -8,13 +8,13 @@
 
   <ItemGroup>
    <!-- External -->
-    <Using Include="Flunt.Notifications"/>
-    <Using Include="Microsoft.AspNetCore.Identity"/>
-    <Using Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore"/>
-    <Using Include="Microsoft.EntityFrameworkCore"/>
+    <Using Include="Flunt.Notifications" />
+    <Using Include="Microsoft.AspNetCore.Identity" />
+    <Using Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+    <Using Include="Microsoft.EntityFrameworkCore" />
 
     <!-- Internal -->
-    <Using Include="IWanteApp.Domain.Products"/>
+    <Using Include="IWanteApp.Domain.Products" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +28,8 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3" />
+    <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+    <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
