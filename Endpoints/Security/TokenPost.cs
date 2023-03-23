@@ -1,3 +1,4 @@
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,19 +15,24 @@ public class TokenPost
     public static Delegate Handle => Action;
 
     [AllowAnonymous]
-    public static IResult Action(LoginRequest loginRequest, IConfiguration configuration, UserManager<IdentityUser> userManager, ILogger<TokenPost> log)
+    public static async  Task<IResult> Action(
+        LoginRequest loginRequest, 
+        IConfiguration configuration, 
+        UserManager<IdentityUser> userManager, 
+        ILogger<TokenPost> log, 
+        IWebHostEnvironment environment) 
     {
         log.LogInformation("Getting Token");
         log.LogWarning("Warning");
         log.LogError("Error");
 
-        var user = userManager.FindByEmailAsync(loginRequest.Email).Result;
+        var user = await userManager.FindByEmailAsync(loginRequest.Email);
         if (user == null)
             Results.BadRequest();
-        if (!userManager.CheckPasswordAsync(user, loginRequest.Password).Result)
+        if (!await userManager.CheckPasswordAsync(user, loginRequest.Password));
             Results.BadRequest();
 
-        var claims = userManager.GetClaimsAsync(user).Result;
+        var claims = await userManager.GetClaimsAsync(user);
         var subject = new ClaimsIdentity(new Claim[]
         {
             new Claim(ClaimTypes.Email, loginRequest.Email),
@@ -42,7 +48,8 @@ public class TokenPost
                 new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
             Audience = configuration["JwtBearerTokenSettings:Audience"],
             Issuer = configuration["JwtBearerTokenSettings:Issuer"],
-            Expires = DateTime.UtcNow.AddSeconds(30)
+            Expires = environment.IsDevelopment() || environment.IsStaging() ? 
+                DateTime.UtcNow.AddYears(1) : DateTime.UtcNow.AddMinutes(2)
         };
 
         //gera o token

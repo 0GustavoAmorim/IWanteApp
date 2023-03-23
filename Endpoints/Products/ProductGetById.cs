@@ -15,7 +15,7 @@ public class ProductGetById
     {
         var product = context.Products.Include(p => p.Category).Where(p => p.Id == id).OrderBy(p => p.Name).Where(p => p.Id == id);
 
-        var result = product.Select(p => new ProductResponse(p.Name, p.Category.Name, p.Description, p.HasStock, p.Active));
+        var result = product.Select(p => new ProductResponse(p.Name, p.Category.Name, p.Description, p.HasStock, p.Price, p.Active));
 
         if (result != null)
         {
