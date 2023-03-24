@@ -14,6 +14,7 @@ using Serilog.Sinks.MSSqlServer;
 using IWanteApp.Endpoints.Products;
 using IWanteApp.Endpoints.Clients;
 using IWanteApp.Domain.Users;
+using IWanteApp.Endpoints.Orders;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, configuration) => {
@@ -103,6 +104,9 @@ app.MapMethods(ProductGetAll.Template, ProductGetAll.Methods, ProductGetAll.Hand
 app.MapMethods(ProductGetById.Template, ProductGetById.Methods, ProductGetById.Handle);
 app.MapMethods(ProductGetShowcase.Template, ProductGetShowcase.Methods, ProductGetShowcase.Handle);
 app.MapMethods(ClientPost.Template, ClientPost.Methods, ClientPost.Handle);
+app.MapMethods(ClientGet.Template, ClientGet.Methods, ClientGet.Handle);
+app.MapMethods(OrderPost.Template, OrderPost.Methods, OrderPost.Handle);
+
 
 app.UseExceptionHandler("/error");
 app.Map("error", (HttpContext http) =>{

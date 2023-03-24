@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using IWanteApp.Domain.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
@@ -11,29 +12,22 @@ public class EmployeePost
     public static Delegate Handle => Action;
 
     [Authorize(Policy = "EmployeePolicy")]
-    public static async Task<IResult> Action(EmployeeRequest employeeRequest, HttpContext http, UserManager<IdentityUser> userManager)
+    public static async Task<IResult> Action(EmployeeRequest employeeRequest, HttpContext http, UserCreator userCreator)
     {
-        var UserId = http.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-        var newUser = new IdentityUser { UserName = employeeRequest.Email, Email = employeeRequest.Email };
-        var result = await userManager.CreateAsync(newUser, employeeRequest.Password);
+        var userId = http.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
-        if (!result.Succeeded)
-            return Results.ValidationProblem(result.Errors.ConvertToProblemDetails());
-
-        //lista de Claims
         var userClaims = new List<Claim>
         {
             new Claim("EmployeeCode", employeeRequest.EmployeeCode),
             new Claim("Name", employeeRequest.Name),
-            new Claim("CreatedBy", UserId),
+            new Claim("CreatedBy", userId),
         };
+        (IdentityResult identity, string userId) result = 
+        await userCreator.Create(employeeRequest.Email, employeeRequest.Password, userClaims);
+        
+        if(!result.identity.Succeeded)
+            return Results.ValidationProblem(result.identity.Errors.ConvertToProblemDetails());
 
-        var claimResult = await userManager.AddClaimsAsync(newUser, userClaims);
-
-        if(!claimResult.Succeeded)
-            return Results.BadRequest(result.Errors.First());
-
-
-        return Results.Created($"/employees/{newUser.Id}", newUser.Id);
+        return Results.Created($"/clients/{result.userId}", result.userId);
     }
 }
