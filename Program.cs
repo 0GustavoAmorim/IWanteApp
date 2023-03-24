@@ -13,6 +13,7 @@ using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using IWanteApp.Endpoints.Products;
 using IWanteApp.Endpoints.Clients;
+using IWanteApp.Domain.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, configuration) => {
@@ -39,6 +40,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     options.Password.RequiredLength = 3;
 }).AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddScoped<QueryAllUserWithClaimName>();
+builder.Services.AddScoped<UserCreator>();
 
 //habilita serviço de autorização para todos os endpoints
 builder.Services.AddAuthorization((options => 

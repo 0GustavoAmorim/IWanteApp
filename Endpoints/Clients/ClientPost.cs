@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Security.Claims;
+using IWanteApp.Domain.Users;
 using IWanteApp.Endpoints.Clients;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,27 +14,19 @@ public class ClientPost
     public static Delegate Handle => Action;
 
     [AllowAnonymous]
-    public static async Task<IResult> Action(ClientRequest clientRequest, HttpContext http, UserManager<IdentityUser> userManager)
+    public static async Task<IResult> Action(ClientRequest clientRequest,  UserCreator userCreator)
     {
-        var newUser = new IdentityUser { UserName = clientRequest.Email, Email = clientRequest.Email };
-        var result = await userManager.CreateAsync(newUser, clientRequest.Password);
-
-        if (!result.Succeeded)
-            return Results.ValidationProblem(result.Errors.ConvertToProblemDetails());
-
-        //lista de Claims
         var userClaims = new List<Claim>
         {
             new Claim("Cpf", clientRequest.Cpf),
-            new Claim("Name", clientRequest.Name),
+            new Claim("Name", clientRequest.Name)
         };
+        
+        (IdentityResult identity, string userId) result = await userCreator.Create(clientRequest.Email, clientRequest.Password, userClaims);
+        
+        if(!result.identity.Succeeded)
+            return Results.ValidationProblem(result.identity.Errors.ConvertToProblemDetails());
 
-        var claimResult = await userManager.AddClaimsAsync(newUser, userClaims);
-
-        if(!claimResult.Succeeded)
-            return Results.BadRequest(claimResult.Errors.First());
-
-
-        return Results.Created($"/clients/{newUser.Id}", newUser.Id);
+        return Results.Created($"/clients/{result.userId}", result.userId);
     }
 }
