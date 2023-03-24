@@ -12,6 +12,7 @@ using Microsoft.Data.SqlClient;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using IWanteApp.Endpoints.Products;
+using IWanteApp.Endpoints.Clients;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, configuration) => {

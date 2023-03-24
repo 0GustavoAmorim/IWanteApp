@@ -3,7 +3,7 @@ using IWanteApp.Endpoints.Clients;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
-namespace IWanteApp.Endpoints.Employees;
+namespace IWanteApp.Endpoints.Clients;
 
 public class ClientPost
 {
@@ -30,9 +30,9 @@ public class ClientPost
         var claimResult = await userManager.AddClaimsAsync(newUser, userClaims);
 
         if(!claimResult.Succeeded)
-            return Results.BadRequest(result.Errors.First());
+            return Results.BadRequest(claimResult.Errors.First());
 
 
-        return Results.Created($"/employees/{newUser.Id}", newUser.Id);
+        return Results.Created($"/clients/{newUser.Id}", newUser.Id);
     }
 }
