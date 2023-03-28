@@ -1,3 +1,4 @@
+
 using IWanteApp.Domain.Orders;
 
 namespace IWanteApp.Infra.Data;
@@ -8,12 +9,13 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Category> Categories { get; set; }
     public DbSet<Order> Orders { get; set; }
 
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     //fluentAPI
     protected override void OnModelCreating (ModelBuilder builder) 
     {
-        base.OnModelCreating(builder);
+        base.OnModelCreating(builder);  
 
         builder.Ignore<Notification>();
 
@@ -28,10 +30,11 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
             .Property(c => c.Name).IsRequired();
 
         builder.Entity<Order>()
+            .Property(o => o.Total).HasColumnType("decimal(18,2)").IsRequired();
+        builder.Entity<Order>()
             .Property(o => o.ClientId).IsRequired();
         builder.Entity<Order>()
             .Property(o => o.DeliveryAddress).IsRequired();
-        //relacionamento N:N (Muitos para Muitos)
         builder.Entity<Order>()
             .HasMany(o => o.Products)
             .WithMany(p => p.Orders)

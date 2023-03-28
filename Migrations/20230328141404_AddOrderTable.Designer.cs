@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IWanteApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230324185528_AddTableOrder")]
-    partial class AddTableOrder
+    [Migration("20230328141404_AddOrderTable")]
+    partial class AddOrderTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,11 +56,6 @@ namespace IWanteApp.Migrations
 
                     b.Property<DateTime>("EditedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");

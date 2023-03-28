@@ -7,9 +7,10 @@ public class Order : Entity
     public string ClientId { get; private set; }
     public List<Product> Products { get; private set; }
     public decimal Total { get; private set; }
-    public string DeliveryAddress { get;  private set; }
+    public string DeliveryAddress { get; private set; }
 
-    private Order() { }
+    private Order () { }
+
 
     public Order(string clientId, string clientName, List<Product> products, string deliveryAddress)
     {
@@ -18,24 +19,24 @@ public class Order : Entity
         DeliveryAddress = deliveryAddress;
         CreatedBy = clientName;
         EditedBy = clientName;
-        CreatedOn = DateTime.Now;
-        EditedOn = DateTime.Now;
+        CreatedOn = DateTime.UtcNow;
+        EditedOn = DateTime.UtcNow;
 
         Total = 0;
-        foreach(var item in Products)
+        foreach (var item in Products)
         {
             Total += item.Price;
         }
 
         Validate();
-    }
 
+    }
     private void Validate()
     {
         var contract = new Contract<Order>()
             .IsNotNull(ClientId, "Client")
-            .IsNotNull(Products, "Products");
+            .IsTrue(Products != null && Products.Any(), "products")
+            .IsNotNullOrEmpty(DeliveryAddress, "DeliveryAddress");
         AddNotifications(contract);
-        
     }
 }

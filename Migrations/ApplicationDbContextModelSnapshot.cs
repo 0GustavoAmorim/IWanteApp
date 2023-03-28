@@ -54,11 +54,6 @@ namespace IWanteApp.Migrations
                     b.Property<DateTime>("EditedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
 

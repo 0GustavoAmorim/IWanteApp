@@ -52,8 +52,9 @@ builder.Services.AddAuthorization((options =>
     .Build();
     options.AddPolicy("EmployeePolicy", p => 
         p.RequireAuthenticatedUser().RequireClaim("EmployeeCode"));
-    options.AddPolicy("Employee005Policy", p => 
-        p.RequireAuthenticatedUser().RequireClaim("EmployeeCode", "005"));
+    options.AddPolicy("CpfPolicy", p => 
+        p.RequireAuthenticatedUser().RequireClaim("Cpf"));
+    
 }));
 //autenticação
 builder.Services.AddAuthentication(x => 
@@ -111,14 +112,14 @@ app.MapMethods(OrderPost.Template, OrderPost.Methods, OrderPost.Handle);
 app.UseExceptionHandler("/error");
 app.Map("error", (HttpContext http) =>{
     var error = http.Features.Get<IExceptionHandlerFeature>()?.Error;
-     
-     if(error != null)
-     {
+    
+    if(error != null)
+    {
         if(error is SqlException)
             return Results.Problem(title: "Database out", statusCode: 500);
         else if(error is BadHttpRequestException)
             return Results.Problem(title: "Error to convert data to other type. See all the information sent", statusCode: 500);
-     }
+    }
     return Results.Problem(title: "An error ocurred", statusCode: 500);
 });
 
