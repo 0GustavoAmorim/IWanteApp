@@ -26,4 +26,4 @@ public class ClientGet
 
         return Results.Ok(result);
     }
-}
+} 
